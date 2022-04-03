@@ -1,3 +1,14 @@
+// Version 1.2
+// Methods:
+// 1. empty()
+// 2. push()
+// 3. dequeue()
+// 4. size()
+// 5. first()
+// 6. pop()
+
+
+
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -9,10 +20,10 @@ using namespace std;
 class myqueue {
 public:
     myqueue() {
-        first = last = -1;
+        f = l = -1;
     }
     bool empty() {
-        if (first == -1) {
+        if (f == -1) {
             return true;
         }
         return false;
@@ -20,12 +31,12 @@ public:
     void push(int value_to_add) {
         if (empty()) {
             elements.push_back(value_to_add);
-            first = 0;
-            last = 0;
+            f = 0;
+            l = 0;
             return;
         }
         elements.push_back(value_to_add);
-        ++last;
+        ++l;
         return;
     }
     int dequeue() {
@@ -33,20 +44,41 @@ public:
         if (empty()) {
             return value_to_return;
         }
-        if (first == last) {
-            value_to_return = elements[first];
+        if (f == l) {
+            value_to_return = elements[f];
             elements.clear();
-            first = last = -1;
+            f = l = -1;
             return value_to_return;
         }
-        value_to_return = elements[first];
-        ++first;
+        value_to_return = elements[f];
+        ++f;
         return value_to_return;
-}
+    }
+    int size() {
+        if (empty()) {
+            return 0;
+        }
+        return l - f + 1;
+    }
+    int first() {
+        int front;
+        if (empty()) {
+            return front;
+        }
+        return elements[f];
+    }
+    void pop() {
+        if (empty()) {
+            return;
+        }
+        ++f;
+        return;
+    }
+
 
 private:
     vector <int> elements;
-    int first, last;
+    int f, l;
 };
 
     int main() {
@@ -56,7 +88,11 @@ private:
     kolejka.push(88888);
     kolejka.push(55555);
     cout << kolejka.empty() << "\n";
-    cout << kolejka.dequeue() << "\n";
+    cout << "size " << kolejka.size() << "\n";
+    cout << "first element " << kolejka.first() << "\n";
+    kolejka.pop();
+    cout << "size " << kolejka.size() << "\n";
+    cout << "first element " << kolejka.first() << "\n";
     cout << kolejka.dequeue() << "\n";
     cout << kolejka.empty() << "\n";
     return 0;  
